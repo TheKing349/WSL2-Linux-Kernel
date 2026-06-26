@@ -1,9 +1,27 @@
-# Introduction
+# Controller Support
+
+This is a fork of the [Main WSL2 Kernel](https://github.com/microsoft/WSL2-Linux-Kernel) that has been modified for USB gamepad support. This is based off of another [fork](https://github.com/atticusrussell/WSL2-Linux-Kernel) of the kernel, but is out of date. This serves as an updated and maintained project following releases of the main repository.
+
+## Modifications
+
+There are not a lot of changes needed, just an updated Makefile. The `Microsoft/config-wsl` serves as a Makefile, in which I modified a few lines (check out this [commit](https://github.com/TheKing349/WSL2-Linux-Kernel/commit/9243fd45280f85c4cc38c729c2dbf2d98a31d940) to learn more).
+
+From there, I recompiled the kernel as directed [here](#build-instructions), which resulted in the binary of `vmlinux` and a `modules.vhdx`, both of which are needed for this custom kernel.
+
+Lastly, I verified everything worked correctly by loading the custom kernel using the [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/wsl/wsl-config) to use the custom binaries. Then I used [usbipd](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to connect a controller, and did `sudo evtest` to ensure functionality.
+
+To use this for yourself, head over to the [releases](https://github.com/TheKing349/WSL2-Linux-Kernel/releases/latest) page and download the `vmlinux+modules.zip` file. Unzip, and link them to your `.wslconfig`.
+
+--
+
+# Original README
+
+## Introduction
 
 The [WSL2-Linux-Kernel][wsl2-kernel] repo contains the kernel source code and
 configuration files for the [WSL2][about-wsl2] kernel.
 
-# Reporting Bugs
+## Reporting Bugs
 
 If you discover an issue relating to WSL or the WSL2 kernel, please report it on
 the [WSL GitHub project][wsl-issue]. It is not possible to report issues on the
@@ -14,7 +32,7 @@ kernel, you may want to work directly with the upstream developers. Please note
 that there are separate processes for reporting a [normal bug][normal-bug] and
 a [security bug][security-bug].
 
-# Feature Requests
+## Feature Requests
 
 Is there a missing feature that you'd like to see? Please request it on the
 [WSL GitHub project][wsl-issue].
@@ -22,7 +40,7 @@ Is there a missing feature that you'd like to see? Please request it on the
 If you're able and interested in contributing kernel code for your feature
 request, we encourage you to [submit the change upstream][submit-patch].
 
-# Build Instructions
+## Build Instructions
 
 Instructions for building an x86_64 WSL2 kernel with an Ubuntu distribution using bash are
 as follows:
@@ -65,7 +83,7 @@ If you prefer, you can also build the modules VHDX manually as follows:
 6. Clean up:
    `rm modules.img # optionally $PWD/modules dir and the now-empty $PWD_modules_img dir too`
 
-# Install Instructions
+## Install Instructions
 
 Please see the documentation on the [.wslconfig configuration
 file][install-inst] for information on using a custom built kernel.
